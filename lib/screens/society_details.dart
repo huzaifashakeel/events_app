@@ -5,7 +5,6 @@ import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/viewsocietyMembers.dart';
-import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:events_app/widgets/society_info.dart';
@@ -148,8 +147,11 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                       //  liked = false;
                                     });
                                   } else {
-                                    await societyProvider.createSocietyMem(
-                                        widget.user, widget.society.uid);
+                                    await userProvider.createEventMem(
+                                        collectionName: "Societies",
+                                        user: widget.user,
+                                        eventid: widget.society.uid);
+
                                     setState(() {});
                                   }
                                 },
@@ -259,8 +261,6 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                   ))
                               .toList(),
                         ),
-
-                        //MemberInfo()
                       ],
                     ));
               }),

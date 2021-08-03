@@ -110,8 +110,10 @@ class _EventDetailsState extends State<EventDetails> {
                                       //  liked = false;
                                     });
                                   } else {
-                                    await eventprovider.createEventMem(
-                                        widget.user, widget.event.uid);
+                                    await userprovider.createEventMem(
+                                        collectionName: "Events",
+                                        user: widget.user,
+                                        eventid: widget.event.uid);
                                     setState(() {});
                                   }
                                 },

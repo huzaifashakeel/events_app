@@ -1,7 +1,6 @@
 import 'package:events_app/screens/explorePage.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/myprofilePage.dart';
-import 'package:events_app/screens/profilePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';

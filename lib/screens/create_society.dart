@@ -97,6 +97,7 @@ class _CreateSocietyState extends State<CreateSociety>
                           // child: Image.file(
                           //   _image,
                           // ),
+                          backgroundImage: AssetImage("images/7.jpg"),
                           radius: 50,
                         ),
                       ),

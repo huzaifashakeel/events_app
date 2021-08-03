@@ -36,7 +36,7 @@ class UserProvider with ChangeNotifier {
     });
   }
 
-  isuservarified({required String email}) async {
+  Future<bool> isuservarified({required String email}) async {
     try {
       await _firestore
           .collection(usercollection)
@@ -52,6 +52,7 @@ class UserProvider with ChangeNotifier {
       print(e);
       isvar = false;
     }
+    return isvar;
   }
 
   Future getuserbyid({required String id}) async {
@@ -164,5 +165,38 @@ class UserProvider with ChangeNotifier {
                   in result.docs)
                 {societyMembers.add(UserModel.fromSnapshot(participant))}
             });
+  }
+
+  Future<bool> createEventMem(
+      {required String collectionName,
+      required UserModel user,
+      required String eventid}) async {
+    try {
+      Map<String, dynamic> values = {
+        "name": user.name,
+        "address": user.address,
+        "instagramID": user.instagramID,
+        "university": user.university,
+        "department": user.department,
+        "phonenumber": user.phonenumser,
+        "email": user.email,
+        "profileimage": user.profileimage,
+        "id": user.id,
+        "dateofbirth": "10-12-1998",
+        "bio": user.bio,
+        "coverimage": "",
+      };
+      _firestore
+          .collection(collectionName)
+          .doc(eventid)
+          .collection("Users")
+          .doc(user.uid)
+          .set(values);
+      //clearControllers();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 }

@@ -64,33 +64,4 @@ class SocietyProvider with ChangeNotifier {
       return false;
     }
   }
-
-  Future<bool> createSocietyMem(UserModel user, String socid) async {
-    try {
-      Map<String, dynamic> values = {
-        "name": user.name,
-        "address": user.address,
-        "instagramID": user.instagramID,
-        "university": user.university,
-        "department": user.department,
-        "phonenumber": user.phonenumser,
-        "email": user.email,
-        "profileimage": user.profileimage,
-        "id": user.id,
-        "dateofbirth": "10-12-1998",
-        "bio": user.bio,
-        "coverimage": "",
-      };
-      await _firestore
-          .collection(societycollection)
-          .doc(socid)
-          .collection("Users")
-          .doc(user.uid)
-          .set(values);
-      return true;
-    } catch (e) {
-      print(e.toString());
-      return false;
-    }
-  }
 }
