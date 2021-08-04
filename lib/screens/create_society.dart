@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:events_app/firebase%20torage/firebase_storage.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/screens/loading.dart';
@@ -40,22 +41,24 @@ class _CreateSocietyState extends State<CreateSociety>
     goals.text = "";
   }
 
-  // late File _image;
-  // late ImagePicker imagePicker;
-  // getImage(bool isCamera) async {
-  //   File image;
-
-  //   if (isCamera) {
-  //     image = (await imagePicker.pickImage(source: ImageSource.camera)) as File;
-  //   } else {
-  //     image =
-  //         (await imagePicker.pickImage(source: ImageSource.gallery)) as File;
-  //   }
-
-  //   setState(() {
-  //     _image = image;
-  //   });
-  // }
+  late XFile? _image;
+  late ImagePicker imagePicker = ImagePicker();
+  getImage(bool isCamera) async {
+    XFile? image;
+    try {
+      if (isCamera) {
+        image = await imagePicker.pickImage(source: ImageSource.camera);
+      } else {
+        image = await imagePicker.pickImage(source: ImageSource.gallery);
+        setState(() {
+          _image = image;
+          print(_image);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +95,24 @@ class _CreateSocietyState extends State<CreateSociety>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(140, 150, 0, 0),
-                        child: CircleAvatar(
-                          // child: Image.file(
-                          //   _image,
-                          // ),
-                          backgroundImage: AssetImage("images/7.jpg"),
-                          radius: 50,
+                        padding: EdgeInsets.fromLTRB(140, 150, 0, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            print("picking image");
+                            getImage(false);
+                          },
+                          child: CircleAvatar(
+                            // child: ClipOval(
+                            //   child: Image.file(
+                            //     File(_image!.path),
+                            //     fit: BoxFit.cover,
+                            //     height: 100,
+                            //     width: 100,
+                            //   ),
+                            // ),
+                            backgroundImage: AssetImage("images/7.jpg"),
+                            radius: 50,
+                          ),
                         ),
                       ),
                     ],
@@ -241,6 +255,9 @@ class _CreateSocietyState extends State<CreateSociety>
                         child: ElevatedButton(
                             onPressed: () async {
                               if (formkey.currentState!.validate()) {
+                                String profileimageurl = await uploadPic(
+                                    imagefile: File(_image!.path));
+                                print("UPloading Society Data");
                                 if (!await societyProvider.createSociety(
                                     societyname.text,
                                     societydescription.text,
@@ -248,10 +265,10 @@ class _CreateSocietyState extends State<CreateSociety>
                                     goals.text,
                                     societytype,
                                     department,
-                                    DateTime.now().toString(),
+                                    DateTime.now(),
                                     widget.userModel.name,
                                     widget.userModel.uid,
-                                    "",
+                                    profileimageurl,
                                     "")) {
                                   print("error in adding society");
                                 } else {

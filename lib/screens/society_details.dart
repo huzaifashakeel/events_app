@@ -81,7 +81,10 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                               padding:
                                   const EdgeInsets.fromLTRB(140, 150, 0, 0),
                               child: CircleAvatar(
-                                backgroundImage: AssetImage("images/11.png"),
+                                child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    image: widget.society.profileimage),
+                                //backgroundImage: AssetImage("images/11.png"),
                                 radius: 50,
                               ),
                             ),
@@ -208,7 +211,10 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                   Row(
                                     children: userProvider.societyMembers
                                         .map((item) => GestureDetector(
-                                              onTap: () {},
+                                              onTap: () {
+                                                changeScreen(context,
+                                                    ViewSocietyMembers());
+                                              },
                                               child: CircleAvatar(
                                                 backgroundColor:
                                                     Colors.grey.shade100,

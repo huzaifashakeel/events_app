@@ -2,6 +2,7 @@ import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/registerPage.dart';
+import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           //   User _firebaseUser = context.watch<User>();
                           changeScreen(
                               context,
-                              HomePage(
+                              BottomNavBar(
                                 useremail: _email,
                               ));
                         },

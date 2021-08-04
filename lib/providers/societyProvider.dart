@@ -36,7 +36,7 @@ class SocietyProvider with ChangeNotifier {
       String goals,
       String type,
       String depratment,
-      String societyCreationTime,
+      DateTime societyCreationTime,
       String adminname,
       String adminuid,
       String profileImage,
@@ -53,7 +53,7 @@ class SocietyProvider with ChangeNotifier {
         "creationdate": societyCreationTime,
         "admin": adminname,
         "adminUid": adminuid,
-        "profileimage": "",
+        "profileimage": profileImage,
         "coverimage": ""
       };
       _firestore.collection(societycollection).doc().set(values);

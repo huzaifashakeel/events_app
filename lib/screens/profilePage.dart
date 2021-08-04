@@ -6,7 +6,6 @@ import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

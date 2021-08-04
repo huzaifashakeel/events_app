@@ -212,13 +212,15 @@ class _EventDetailsState extends State<EventDetails> {
                         return Padding(
                             padding: const EdgeInsets.fromLTRB(15, 8, 8, 0),
                             child: Container(
-                              height: 50,
-                              width: 50,
+                              height: 60,
+                              width: 60,
                               child: Center(
-                                child: FadeInImage.memoryNetwork(
-                                  placeholder: kTransparentImage,
-                                  image: userprovider
-                                      .eventparticipants[index].profileimage,
+                                child: ClipOval(
+                                  child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    image: userprovider
+                                        .eventparticipants[index].profileimage,
+                                  ),
                                 ),
                               ),
                             ));

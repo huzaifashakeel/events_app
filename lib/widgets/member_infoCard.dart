@@ -21,13 +21,12 @@ class MemberInfo extends StatelessWidget {
           children: [
             Padding(padding: EdgeInsets.only(left: width * 0.03)),
             CircleAvatar(
-              backgroundColor: Colors.grey.shade100,
-              child: ClipOval(
-                child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage, image: user.profileimage),
-              ),
-              radius: 33,
-            ),
+                backgroundColor: Colors.grey.shade100,
+                child: ClipOval(
+                  child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage, image: user.profileimage),
+                ),
+                radius: 35),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
