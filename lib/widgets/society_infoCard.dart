@@ -1,6 +1,6 @@
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/society.dart';
-import 'package:events_app/models/user.dart';
+import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/society_details.dart';
 import 'package:events_app/widgets/customtext.dart';
@@ -18,11 +18,19 @@ class SocietyInfoCard extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     final userprovider = Provider.of<UserProvider>(context);
+    final societyprovider = Provider.of<SocietyProvider>(context);
     return GestureDetector(
       onTap: () async {
         await userprovider.loadSocietyMembers(societyid: society.uid);
-        changeScreen(context,
-            SocietyDetails(society: society, user: userprovider.varifiedUser));
+        bool isadmin = await societyprovider.isadminorUser(
+            uid: userprovider.varifiedUser.uid, socid: society.uid);
+        changeScreen(
+            context,
+            SocietyDetails(
+              society: society,
+              user: userprovider.varifiedUser,
+              isadmin: isadmin,
+            ));
       },
       child: Container(
         height: height * 0.13,

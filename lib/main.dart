@@ -21,7 +21,8 @@ void main() async {
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
-          create: (context) => context.read<AuthenticationService>().authStateChanges,
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
           initialData: null,
         )
       ],
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        // brightness: Brightness.light,
         primaryColor: Colors.white,
         buttonColor: Colors.white,
       ),
@@ -44,4 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

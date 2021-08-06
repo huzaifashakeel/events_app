@@ -13,7 +13,7 @@ class MemberInfo extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Container(
       height: height * 0.13,
-      width: width * 0.85,
+      width: width * 0.9,
       child: Card(
         color: Colors.grey.shade100,
         elevation: 2,
@@ -28,7 +28,7 @@ class MemberInfo extends StatelessWidget {
                 ),
                 radius: 35),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(10, height * 0.0237, 0, 0),
               child: Column(
                 children: [
                   CustomText(

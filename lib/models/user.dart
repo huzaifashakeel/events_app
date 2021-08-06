@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/society.dart';
 
 class UserModel {
-  static const ID = "id";
   static const NAME = "name";
   static const ADDRESS = "address";
   static const INSTA = "instagramID";
@@ -16,7 +15,6 @@ class UserModel {
   static const PHONENUMBER = "phonenumber";
   static const LIKEDSOCIETIES = "likedsocieties";
 
-  String _id = "";
   String _uid = "";
   String _name = "";
   String _address = "";
@@ -33,7 +31,6 @@ class UserModel {
   //String _likedsocieties;
 
 //  getters
-  String get id => _id;
   String get uid => _uid;
   String get name => _name;
   String get address => _address;
@@ -50,7 +47,6 @@ class UserModel {
 
   UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     _uid = snapshot.id;
-    _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
     _address = snapshot.data()![ADDRESS];
     _instagramID = snapshot.data()![INSTA];

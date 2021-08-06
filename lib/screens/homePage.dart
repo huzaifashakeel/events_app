@@ -2,7 +2,6 @@ import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
-import 'package:events_app/screens/create_event.dart';
 import 'package:events_app/screens/create_society.dart';
 import 'package:events_app/screens/loginPage.dart';
 import 'package:events_app/screens/profilePage.dart';
@@ -23,10 +22,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-  }
-
   @override
   Widget build(BuildContext context) {
     print(widget.useremail);
@@ -44,6 +39,13 @@ class _HomePageState extends State<HomePage> {
 
           return Scaffold(
               appBar: AppBar(
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        eventprovider.loadevents();
+                      },
+                      icon: Icon(Icons.replay_outlined))
+                ],
                 elevation: 0,
                 title: CustomText(
                   text: "Events",
@@ -98,10 +100,10 @@ class _HomePageState extends State<HomePage> {
                               size: 35,
                             ),
                             onTap: () => {
-                              changeScreen(
-                                  context,
-                                  CreateEvent(
-                                      eventcreator: userProvider.varifiedUser))
+                              // changeScreen(
+                              //     context,
+                              //     CreateEvent(
+                              //         eventcreator: userProvider.varifiedUser))
                             },
                           )
                         : ListTile(

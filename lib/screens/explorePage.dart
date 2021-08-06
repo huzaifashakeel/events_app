@@ -17,7 +17,6 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -49,12 +48,11 @@ class _ExplorePageState extends State<ExplorePage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.count(
-                childAspectRatio: (_width * 0.45) / (_width * 0.61),
+                childAspectRatio: (_width * 0.45) / (_width * 0.64),
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
                 crossAxisCount: 2,
                 physics: ScrollPhysics(),
-
                 children: eventprovider.events
                     .map((item) => EventExploreWidget(
                           event: item,

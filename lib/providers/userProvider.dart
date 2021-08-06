@@ -55,13 +55,12 @@ class UserProvider with ChangeNotifier {
     return isvar;
   }
 
-  Future getuserbyid({required String id}) async {
-    await _firestore
-        .collection(usercollection)
-        .where("id", isEqualTo: id)
-        .get()
+  Future getuserbyid({required String uid}) async {
+    await _firestore.collection(usercollection).doc(uid).get()
+        //.where("id", isEqualTo: id)
+        //.get()
         .then((doc) {
-      eventhost = UserModel.fromSnapshot(doc.docs.first);
+      eventhost = UserModel.fromSnapshot(doc);
     });
   }
 
@@ -110,6 +109,7 @@ class UserProvider with ChangeNotifier {
   }
 
   //relational functions of User and event
+
   Future<bool> ifalreadylikedbyuser(
       {required String collectionName,
       required String collectionDocid,
@@ -134,6 +134,12 @@ class UserProvider with ChangeNotifier {
         .doc(collectionDocid)
         .collection(usercollection)
         .doc(userid)
+        .delete();
+    await _firestore
+        .collection("Users")
+        .doc(userid)
+        .collection("Societies")
+        .doc(collectionDocid)
         .delete();
   }
 
@@ -181,7 +187,6 @@ class UserProvider with ChangeNotifier {
         "phonenumber": user.phonenumser,
         "email": user.email,
         "profileimage": user.profileimage,
-        "id": user.id,
         "dateofbirth": "10-12-1998",
         "bio": user.bio,
         "coverimage": "",

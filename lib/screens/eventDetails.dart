@@ -6,6 +6,7 @@ import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/loading.dart';
 import 'package:events_app/screens/showUserProfile.dart';
+import 'package:events_app/screens/vieweventfollwers.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventSummaryCard.dart';
 import 'package:events_app/widgets/member_infoCard.dart';
@@ -46,7 +47,7 @@ class _EventDetailsState extends State<EventDetails> {
 
     //just for testing
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: FutureBuilder(
@@ -92,7 +93,7 @@ class _EventDetailsState extends State<EventDetails> {
                             color: Colors.white,
                             child: Container(
                               height: height * 0.07,
-                              width: width * 0.1,
+                              width: width * 0.15,
                               child: IconButton(
                                 icon: Icon(
                                   Icons.thumb_up,
@@ -123,7 +124,7 @@ class _EventDetailsState extends State<EventDetails> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 190, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, height * 0.28, 0, 0),
                         child: EventSummaryCard(
                           event: widget.event,
                         ),
@@ -145,7 +146,8 @@ class _EventDetailsState extends State<EventDetails> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 10),
+                        padding: EdgeInsets.fromLTRB(
+                            width * 0.05, 0, 0, height * 0.01),
                         child: CustomText(
                           text:
                               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book",
@@ -203,19 +205,23 @@ class _EventDetailsState extends State<EventDetails> {
                       ),
                     ],
                   ),
-                  Container(
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: userprovider.eventparticipants.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 8, 8, 0),
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              child: Center(
-                                child: ClipOval(
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+                    child: Container(
+                      height: height * 0.07,
+                      child: GestureDetector(
+                        onTap: () {
+                          changeScreen(context, ViewEventFollowers());
+                        },
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: userprovider.eventparticipants.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                child: Center(
+                              child: ClipOval(
+                                child: CircleAvatar(
+                                  radius: 25,
                                   child: FadeInImage.memoryNetwork(
                                     placeholder: kTransparentImage,
                                     image: userprovider
@@ -224,7 +230,9 @@ class _EventDetailsState extends State<EventDetails> {
                                 ),
                               ),
                             ));
-                      },
+                          },
+                        ),
+                      ),
                     ),
                   )
                 ],

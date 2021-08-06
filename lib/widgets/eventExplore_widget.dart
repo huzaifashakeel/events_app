@@ -1,4 +1,3 @@
-
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/event.dart';
 import 'package:events_app/providers/societyProvider.dart';
@@ -35,7 +34,7 @@ class EventExploreWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     print(event.hostuid);
-                    await userprovider.getuserbyid(id: event.hostid);
+                    await userprovider.getuserbyid(uid: event.hostuid.trim());
 
                     await societyProvider.getSocietybyid(
                         id: event.hostsocietyid);

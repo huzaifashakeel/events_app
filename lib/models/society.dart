@@ -3,7 +3,6 @@ import 'package:events_app/models/event.dart';
 import 'package:events_app/models/user.dart';
 
 class SocietyModel {
-  static const ID = "id";
   static const NAME = "name";
   static const DESCRIPTION = "description";
   static const PROFILEIMAGE = "profileimage";
@@ -20,7 +19,6 @@ class SocietyModel {
   static const TYPE = "type";
 
   String _uid = "";
-  String _id = "";
   String _name = "";
   String _description = "";
   String _university = "";

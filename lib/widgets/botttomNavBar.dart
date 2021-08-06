@@ -9,14 +9,14 @@ class BottomNavBar extends StatefulWidget {
   final String useremail;
 
   const BottomNavBar({Key? key, required this.useremail}) : super(key: key);
-  
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-
-  PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+  PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
         confineInSafeArea: true,
-        backgroundColor: Colors.white, // Default is Colors.white.
+        backgroundColor: Colors.black54, // Default is Colors.white.
         handleAndroidBackButtonPress: true, // Default is true.
         resizeToAvoidBottomInset:
             true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -84,7 +84,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           curve: Curves.ease,
           duration: Duration(milliseconds: 300),
         ),
-        navBarStyle: NavBarStyle.style11, // Choose the nav bar style with this property.
+        navBarStyle:
+            NavBarStyle.style11, // Choose the nav bar style with this property.
       ),
     );
   }

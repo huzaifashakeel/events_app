@@ -1,4 +1,6 @@
 import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/models/event.dart';
+import 'package:events_app/models/society.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
@@ -9,8 +11,11 @@ import 'package:provider/provider.dart';
 
 class CreateEvent extends StatefulWidget {
   final UserModel eventcreator;
+  final SocietyModel eventorganizer;
 
-  const CreateEvent({Key? key, required this.eventcreator}) : super(key: key);
+  const CreateEvent(
+      {Key? key, required this.eventcreator, required this.eventorganizer})
+      : super(key: key);
 
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -56,7 +61,8 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   Future<void> _selectTime(BuildContext context, int startorendtime) async {
-    final TimeOfDay? pickedTime = await showTimePicker(context: context, initialTime: currentTime);
+    final TimeOfDay? pickedTime =
+        await showTimePicker(context: context, initialTime: currentTime);
     if (pickedTime != null)
       setState(() {
         if (startorendtime == 1) {
@@ -180,7 +186,8 @@ class _CreateEventState extends State<CreateEvent> {
                     Container(
                         height: height * 0.08,
                         width: width * 0.15,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10)),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -310,12 +317,14 @@ class _CreateEventState extends State<CreateEvent> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
-                          onTap: () => {print(currentTime), _selectTime(context, 1)},
+                          onTap: () =>
+                              {print(currentTime), _selectTime(context, 1)},
                           child: TextFormField(
                             enabled: false,
                             //controller: authProvider.password,
                             decoration: InputDecoration(
-                                hintText: currentTime.toString().substring(10, 15),
+                                hintText:
+                                    currentTime.toString().substring(10, 15),
                                 border: InputBorder.none,
                                 icon: Icon(Icons.watch)),
                           ),
@@ -341,7 +350,8 @@ class _CreateEventState extends State<CreateEvent> {
                             enabled: false,
                             //controller: authProvider.password,
                             decoration: InputDecoration(
-                                hintText: eventendTime.toString().substring(10, 15),
+                                hintText:
+                                    eventendTime.toString().substring(10, 15),
                                 border: InputBorder.none,
                                 icon: Icon(Icons.watch)),
                           ),
@@ -388,7 +398,6 @@ class _CreateEventState extends State<CreateEvent> {
               ),
               CustomTextField(
                   text: "Enter Event Address", editingController: eventaddress),
-
               Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: width * 0.08)),
@@ -403,7 +412,6 @@ class _CreateEventState extends State<CreateEvent> {
               CustomTextField(
                   text: "Enter Event Description",
                   editingController: discription),
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
                 child: Container(
@@ -412,21 +420,21 @@ class _CreateEventState extends State<CreateEvent> {
                     child: ElevatedButton(
                         onPressed: () async {
                           if (formkey.currentState!.validate()) {
-
                             // if (!await authProvider.CreateEvent()) {
                             if (!await authProvider.createEvent(
-                                widget.eventcreator.uid,
                                 eventname.text,
                                 discription.text,
                                 eventaddress.text,
                                 eventdate,
                                 "",
                                 widget.eventcreator.name,
-                                "Host Society",
+                                widget.eventorganizer.name,
                                 eventStartingTime,
                                 eventendingTime,
                                 participants,
-                                isonline)) {
+                                isonline,
+                                widget.eventorganizer.uid,
+                                widget.eventcreator.uid)) {
                               print("Error");
                             } else {
                               print("added");

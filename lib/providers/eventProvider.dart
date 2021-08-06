@@ -10,11 +10,12 @@ class EventProvider with ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   EventProvider.initialize() {
-    _loadevents();
+    loadevents();
   }
 
-  _loadevents() async {
+  loadevents() async {
     await _firestore.collection(eventcollection).get().then((result) {
+      events = [];
       for (DocumentSnapshot<Map<String, dynamic>> event in result.docs) {
         events.add(EventModel.fromSnapshot(event));
       }
@@ -23,21 +24,23 @@ class EventProvider with ChangeNotifier {
   }
 
   Future<bool> createEvent(
-      String id,
-      String eventname,
-      String eventdescription,
-      String eventaddress,
-      String eventdate,
-      String eventimage,
-      String host,
-      String hostsociety,
-      String startime,
-      String endtime,
-      int partcipants,
-      bool isonline) async {
+    String eventname,
+    String eventdescription,
+    String eventaddress,
+    String eventdate,
+    String eventimage,
+    String host,
+    String hostsociety,
+    String startime,
+    String endtime,
+    int partcipants,
+    bool isonline,
+    //int intrestcount,
+    String hostsocietyid,
+    String hostuid,
+  ) async {
     try {
       Map<String, dynamic> values = {
-        "hostid": id,
         "name": eventname,
         "description": eventdescription,
         "location": eventaddress,
@@ -50,9 +53,17 @@ class EventProvider with ChangeNotifier {
         "Intrest_count": 4,
         "participants": partcipants,
         "isonline": isonline,
+        "hostsocietyid": hostsocietyid,
+        "hostuid": hostuid,
       };
 
       _firestore.collection(eventcollection).doc().set(values);
+      _firestore
+          .collection("Societies")
+          .doc(hostsocietyid)
+          .collection("Events")
+          .doc()
+          .set(values);
       // clearControllers();
       return true;
     } catch (e) {

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:events_app/firebase%20torage/firebase_storage.dart';
+import 'package:events_app/firebase%20storage/firebase_storage.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/screens/loading.dart';
@@ -71,7 +71,7 @@ class _CreateSocietyState extends State<CreateSociety>
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: Form(
               key: formkey,
               child: Column(
@@ -80,7 +80,7 @@ class _CreateSocietyState extends State<CreateSociety>
                     children: [
                       Container(
                         height: height * 0.3,
-                        width: width * 0.93,
+                        width: width,
                         child: Card(
                           elevation: 3,
                           child: ClipRRect(
@@ -95,7 +95,8 @@ class _CreateSocietyState extends State<CreateSociety>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(140, 150, 0, 0),
+                        padding: EdgeInsets.fromLTRB(
+                            width * 0.36, height * 0.21, 0, 0),
                         child: GestureDetector(
                           onTap: () {
                             print("picking image");
@@ -142,7 +143,8 @@ class _CreateSocietyState extends State<CreateSociety>
                       text: "Enter Society Description",
                       editingController: societydescription),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    padding: EdgeInsets.fromLTRB(
+                        0, height * 0.015, 0, height * 0.015),
                     child: Row(
                       children: [
                         CustomText(
@@ -193,7 +195,8 @@ class _CreateSocietyState extends State<CreateSociety>
                       text: "Select Your UNiversity",
                       editingController: societyuniversity),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    padding: EdgeInsets.fromLTRB(
+                        0, height * 0.015, 0, height * 0.015),
                     child: Row(
                       children: [
                         CustomText(
@@ -248,7 +251,8 @@ class _CreateSocietyState extends State<CreateSociety>
                     maxLines: 5,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
+                    padding: EdgeInsets.fromLTRB(
+                        0, height * 0.015, 0, height * 0.015),
                     child: Container(
                         height: height * 0.07,
                         width: width * 0.5,

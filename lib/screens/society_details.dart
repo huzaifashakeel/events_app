@@ -4,6 +4,7 @@ import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
+import 'package:events_app/screens/create_event.dart';
 import 'package:events_app/screens/viewsocietyMembers.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventFeed_widget.dart';
@@ -13,10 +14,15 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class SocietyDetails extends StatefulWidget {
+  final bool isadmin;
   final SocietyModel society;
   final UserModel user;
 
-  const SocietyDetails({Key? key, required this.society, required this.user})
+  const SocietyDetails(
+      {Key? key,
+      required this.society,
+      required this.user,
+      required this.isadmin})
       : super(key: key);
 
   @override
@@ -56,14 +62,14 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                 } else
                   ifalreadyliked = false;
                 return Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Column(
                       children: [
                         Stack(
                           children: [
                             Container(
                               height: height * 0.3,
-                              width: width * 0.93,
+                              width: width,
                               child: Card(
                                 elevation: 3,
                                 child: ClipRRect(
@@ -78,12 +84,17 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(140, 150, 0, 0),
+                              padding: EdgeInsets.fromLTRB(
+                                  width * 0.35, height * 0.23, 0, 0),
                               child: CircleAvatar(
-                                child: FadeInImage.memoryNetwork(
+                                child: ClipOval(
+                                  child: FadeInImage.memoryNetwork(
                                     placeholder: kTransparentImage,
-                                    image: widget.society.profileimage),
+                                    image: widget.society.profileimage,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+
                                 //backgroundImage: AssetImage("images/11.png"),
                                 radius: 50,
                               ),
@@ -96,7 +107,9 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                   Icons.arrow_back,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
                               //     ),
                             )
@@ -118,62 +131,108 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                         //     size: 18,
                         //   ),
                         // ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                            height: height * 0.07,
-                            width: width * 0.9,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                      if (ifalreadyliked)
-                                        return Colors.grey;
-                                      else
-                                        return Colors.blue;
-                                    },
-                                  ),
+                        widget.isadmin
+                            ? Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Container(
+                                  height: height * 0.07,
+                                  width: width * 0.9,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty
+                                            .resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                            return Colors.blue;
+                                          },
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        changeScreen(
+                                            context,
+                                            CreateEvent(
+                                              eventcreator: widget.user,
+                                              eventorganizer: widget.society,
+                                            ));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: width * 0.17)),
+                                          Icon(Icons.event),
+                                          CustomText(
+                                              text: "  Create An Event",
+                                              size: 18,
+                                              color: Colors.white),
+                                        ],
+                                      )),
                                 ),
-                                onPressed: () async {
-                                  print("printing data");
-                                  print(result.data);
-                                  if (ifalreadyliked) {
-                                    userProvider.deleteMem(
-                                        collectionName: "Societies",
-                                        collectionDocid: widget.society.uid,
-                                        userid: widget.user.uid);
-                                    setState(() {
-                                      //  liked = false;
-                                    });
-                                  } else {
-                                    await userProvider.createEventMem(
-                                        collectionName: "Societies",
-                                        user: widget.user,
-                                        eventid: widget.society.uid);
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Container(
+                                  height: height * 0.07,
+                                  width: width * 0.9,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty
+                                            .resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                            if (ifalreadyliked)
+                                              return Colors.grey;
+                                            else
+                                              return Colors.blue;
+                                          },
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        print("printing data");
+                                        print(result.data);
+                                        if (ifalreadyliked) {
+                                          userProvider.deleteMem(
+                                              collectionName: "Societies",
+                                              collectionDocid:
+                                                  widget.society.uid,
+                                              userid: widget.user.uid);
 
-                                    setState(() {});
-                                  }
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: width * 0.23)),
-                                    Icon(Icons.group),
-                                    CustomText(
-                                        text: ifalreadyliked
-                                            ? "  Unfollow"
-                                            : "  Follow",
-                                        size: 18,
-                                        color: Colors.white),
-                                  ],
-                                )),
-                          ),
-                        ),
+                                          setState(() {
+                                            //  liked = false;
+                                          });
+                                        } else {
+                                          await userProvider.createEventMem(
+                                              collectionName: "Societies",
+                                              user: widget.user,
+                                              eventid: widget.society.uid);
+                                          await societyProvider
+                                              .createuserSociety(
+                                                  society: widget.society,
+                                                  userid: widget.user.uid);
+
+                                          setState(() {});
+                                        }
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: width * 0.23)),
+                                          Icon(Icons.group),
+                                          CustomText(
+                                              text: ifalreadyliked
+                                                  ? "  Unfollow"
+                                                  : "  Follow",
+                                              size: 18,
+                                              color: Colors.white),
+                                        ],
+                                      )),
+                                ),
+                              ),
                         // Padding(
                         //   padding: const EdgeInsets.all(16.0),
                         //   child: Container(

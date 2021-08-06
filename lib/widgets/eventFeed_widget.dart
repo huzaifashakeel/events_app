@@ -82,7 +82,8 @@ class _EventFeedState extends State<EventFeed> {
                             'You Must complete your information to view Event Details'),
                       ));
                     } else {
-                      await userprovider.getuserbyid(id: widget.event.hostid);
+                      await userprovider.getuserbyid(
+                          uid: widget.event.hostuid.trim());
 
                       //to load event participants
 
