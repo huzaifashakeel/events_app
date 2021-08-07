@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:events_app/firebase%20storage/firebase_storage.dart';
+import 'package:events_app/firebase%20torage/firebase_storage.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/screens/loading.dart';

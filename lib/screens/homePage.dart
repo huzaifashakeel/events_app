@@ -1,5 +1,6 @@
 import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/main.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/create_society.dart';
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                       onTap: () {
                         context.read<AuthenticationService>().signOut();
-                        changeScreenReplacement(context, LoginPage());
+                        changeScreenReplacement(context, MyApp());
                       },
                       leading: Icon(
                         Icons.exit_to_app,
