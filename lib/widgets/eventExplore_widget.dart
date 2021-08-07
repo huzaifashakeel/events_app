@@ -33,24 +33,30 @@ class EventExploreWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    print(event.hostuid);
-                    await userprovider.getuserbyid(uid: event.hostuid.trim());
+                    if (!userprovider.isvar) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                            'You Must complete your information to view Event Details'),
+                      ));
+                    } else {
+                      await userprovider.getuserbyid(uid: event.hostuid.trim());
 
-                    await societyProvider.getSocietybyid(
-                        id: event.hostsocietyid);
-                    if (userprovider.isvar) {
-                      await userprovider.getVarifiedUser(email: useremail);
+                      await societyProvider.getSocietybyid(
+                          id: event.hostsocietyid);
+                      if (userprovider.isvar) {
+                        await userprovider.getVarifiedUser(email: useremail);
+                      }
+
+                      changeScreen(
+                          context,
+                          EventDetails(
+                            event: event,
+                            eventhost: userprovider.eventhost,
+                            user: userprovider.varifiedUser,
+                            eventhostSociety: societyProvider.eventhostsociety,
+                            showhostsoc: true,
+                          ));
                     }
-
-                    changeScreen(
-                        context,
-                        EventDetails(
-                          event: event,
-                          eventhost: userprovider.eventhost,
-                          user: userprovider.varifiedUser,
-                          eventhostSociety: societyProvider.eventhostsociety,
-                          showhostsoc: true,
-                        ));
                   },
                   child: Container(
                       height: _height * 0.2,
