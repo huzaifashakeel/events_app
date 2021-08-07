@@ -72,18 +72,18 @@ class UserProvider with ChangeNotifier {
       });
 
   Future<bool> createUser(
-      String username,
-      String usercity,
-      String userInsta,
-      String useruni,
-      String userdepartment,
-      String userDOB,
-      String userbio,
-      String phno,
-      String email,
-      String profileimage,
-      String coverimage,
-      String userid) async {
+    String username,
+    String usercity,
+    String userInsta,
+    String useruni,
+    String userdepartment,
+    String userDOB,
+    String userbio,
+    String phno,
+    String email,
+    String profileimage,
+    String coverimage,
+  ) async {
     try {
       Map<String, dynamic> values = {
         "name": username,
@@ -95,9 +95,8 @@ class UserProvider with ChangeNotifier {
         "bio": userbio,
         "phonenumber": phno,
         "email": email,
-        "profileimage": "",
+        "profileimage": profileimage,
         "coverimage": "",
-        "id": userid,
       };
 
       _firestore.collection(usercollection).doc().set(values);

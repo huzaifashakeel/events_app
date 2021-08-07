@@ -1,12 +1,15 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:events_app/firebase%20torage/firebase_storage.dart';
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -41,6 +44,28 @@ class _ProfilePageState extends State<ProfilePage> {
     userUniversity.text = "";
   }
 
+  // ignore: avoid_init_to_null
+  late XFile? _image = null;
+
+  ///late XFile? _image = null;
+  late ImagePicker imagePicker = ImagePicker();
+  getImage(bool isCamera) async {
+    XFile? image;
+    try {
+      if (isCamera) {
+        image = await imagePicker.pickImage(source: ImageSource.camera);
+      } else {
+        image = await imagePicker.pickImage(source: ImageSource.gallery);
+        setState(() {
+          _image = image;
+          print(_image);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -58,74 +83,100 @@ class _ProfilePageState extends State<ProfilePage> {
                 Stack(children: [
                   Container(
                     width: double.maxFinite,
-                    height: _size.height * 0.40,
+                    height: _size.height * 0.30,
                     color: Colors.red,
-                    child: Image.asset(
-                      'images/2.jpg',
-                      fit: BoxFit.fill,
-                    ),
+                    child: _image == null
+                        ? Image.asset("images/13.jpg")
+                        : Image.file(
+                            File(_image!.path),
+                            fit: BoxFit.cover,
+                            height: 100,
+                            width: 100,
+                          ),
                   ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //         content: Container(
+                  //       height: _size.height * 0.15,
+                  //       child: Column(
+                  //         children: [
+                  //           TextButton(
+                  //               onPressed: () {}, child: Text("View Photo")),
+                  //           Divider(
+                  //             thickness: 2,
+                  //           ),
+                  //           TextButton(
+                  //               onPressed: () {
+                  //                 getImage(false);
+                  //               },
+                  //               child: Text("Select Photo"))
+                  //         ],
+                  //       ),
+                  //     )));
+                  //   },
+                  // child:
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
                     child: Container(
                       width: double.maxFinite,
-                      height: _size.height * 0.40,
-                      color: Colors.black.withOpacity(0.5),
+                      height: _size.height * 0.30,
+                      color: Colors.black.withOpacity(0.3),
                     ),
+                    //    ),
                   )
                 ]),
                 Padding(
-                  padding: EdgeInsets.only(top: _size.height * 0.07, left: 10),
+                  padding: EdgeInsets.only(top: _size.height * 0.02, left: 10),
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(width: 2, color: Colors.white)),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: Icon(
                             Icons.arrow_back,
                             color: Colors.white,
                           ))),
                 ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: _size.height * 0.15),
-                    child: Column(
-                      children: [
-                        ClipRect(
-                          child: BackdropFilter(
-                            filter:
-                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                            child: DottedBorder(
-                              dashPattern: [6, 6],
-                              borderType: BorderType.RRect,
-                              radius: Radius.circular(10),
-                              strokeWidth: 2,
-                              color: Colors.white,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.camera_alt_outlined,
+                if (_image == null)
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: _size.height * 0.1),
+                      child: Column(
+                        children: [
+                          ClipRect(
+                            child: GestureDetector(
+                              onTap: () {
+                                getImage(false);
+                              },
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                    sigmaX: 10.0, sigmaY: 10.0),
+                                child: DottedBorder(
+                                    padding: EdgeInsets.all(16),
+                                    dashPattern: [6, 6],
+                                    borderType: BorderType.RRect,
+                                    // radius: Radius.circular(10),
+                                    strokeWidth: 2,
                                     color: Colors.white,
-                                  )),
+                                    child: CustomText(
+                                      text: "Tap to select photo",
+                                      color: Colors.white,
+                                      size: 14,
+                                    )),
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomText(
-                            text: 'Change Image',
-                            color: Colors.white,
-                            size: 13,
-                          ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: _size.height * 0.30),
+                    padding: EdgeInsets.only(top: _size.height * 0.22),
                     child: Container(
                       height: _size.width * 0.35,
                       width: _size.width * 0.35,
@@ -141,32 +192,42 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ClipRect(
-                            child: BackdropFilter(
-                              filter:
-                                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                              child: DottedBorder(
-                                dashPattern: [6, 6],
-                                borderType: BorderType.RRect,
-                                radius: Radius.circular(10),
-                                strokeWidth: 2,
-                                color: Colors.white,
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.camera_alt_outlined,
-                                      color: Colors.white,
-                                    )),
+                            child: GestureDetector(
+                              onTap: () {
+                                getImage(false);
+                              },
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                    sigmaX: 10.0, sigmaY: 10.0),
+                                child: DottedBorder(
+                                  dashPattern: [6, 6],
+                                  borderType: BorderType.RRect,
+                                  radius: Radius.circular(10),
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                  child: CustomText(
+                                    text: "select photo",
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                  // child: IconButton(
+                                  //     onPressed: () {},
+                                  //     icon: Icon(
+                                  //       Icons.camera_alt_outlined,
+                                  //       color: Colors.white,
+                                  //     )),
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomText(
-                              text: 'Change Image',
-                              color: Colors.white,
-                              size: 13,
-                            ),
-                          )
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: CustomText(
+                          //     text: 'Change Image',
+                          //     color: Colors.white,
+                          //     size: 13,
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -249,19 +310,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ElevatedButton(
                           onPressed: () async {
                             if (formkey.currentState!.validate()) {
+                              String profilepiclink = await uploadPic(
+                                  imagefile: File(_image!.path));
                               if (!await userProvider.createUser(
-                                  userName.text,
-                                  userCity.text,
-                                  userInsta.text,
-                                  userUniversity.text,
-                                  userDepartment.text,
-                                  "10-12-1990",
-                                  userBio.text,
-                                  userPhNo.text,
-                                  widget.useremail.toString(),
-                                  "",
-                                  "",
-                                  userInsta.text + "123")) {
+                                userName.text,
+                                userCity.text,
+                                userInsta.text,
+                                userUniversity.text,
+                                userDepartment.text,
+                                "10-12-1990",
+                                userBio.text,
+                                userPhNo.text,
+                                widget.useremail.toString(),
+                                profilepiclink,
+                                "",
+                              )) {
                                 print("error in adding User");
                               } else {
                                 clearControllers();
