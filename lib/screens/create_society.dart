@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:events_app/firebase%20torage/firebase_storage.dart';
+import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
+import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/loading.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
@@ -40,7 +42,8 @@ class _CreateSocietyState extends State<CreateSociety>
     goals.text = "";
   }
 
-  late XFile? _image;
+  // ignore: avoid_init_to_null
+  XFile? _image = null;
   late ImagePicker imagePicker = ImagePicker();
   getImage(bool isCamera) async {
     XFile? image;
@@ -70,7 +73,7 @@ class _CreateSocietyState extends State<CreateSociety>
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Form(
               key: formkey,
               child: Column(
@@ -95,23 +98,25 @@ class _CreateSocietyState extends State<CreateSociety>
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
-                            width * 0.36, height * 0.21, 0, 0),
+                            width * 0.3, height * 0.21, 0, 0),
                         child: GestureDetector(
                           onTap: () {
                             print("picking image");
                             getImage(false);
                           },
                           child: CircleAvatar(
-                            // child: ClipOval(
-                            //   child: Image.file(
-                            //     File(_image!.path),
-                            //     fit: BoxFit.cover,
-                            //     height: 100,
-                            //     width: 100,
-                            //   ),
-                            // ),
-                            backgroundImage: AssetImage("images/7.jpg"),
-                            radius: 50,
+                            child: ClipOval(
+                              child: _image == null
+                                  ? Image.asset("images/13.jpg")
+                                  : Image.file(
+                                      File(_image!.path),
+                                      fit: BoxFit.cover,
+                                      height: height * 0.2,
+                                      width: width * 0.34,
+                                    ),
+                            ),
+                            // backgroundImage: AssetImage("images/7.jpg"),
+                            radius: 60,
                           ),
                         ),
                       ),
@@ -151,7 +156,7 @@ class _CreateSocietyState extends State<CreateSociety>
                           fontWeight: FontWeight.w700,
                           size: 16,
                         ),
-                        Padding(padding: EdgeInsets.only(left: width * 0.45)),
+                        Padding(padding: EdgeInsets.only(left: width * 0.48)),
                         Card(
                           color: Colors.grey.shade200,
                           child: DropdownButton<String>(
@@ -203,7 +208,7 @@ class _CreateSocietyState extends State<CreateSociety>
                           fontWeight: FontWeight.w700,
                           size: 16,
                         ),
-                        Padding(padding: EdgeInsets.only(left: width * 0.3)),
+                        Padding(padding: EdgeInsets.only(left: width * 0.33)),
                         Card(
                           color: Colors.grey.shade200,
                           child: DropdownButton<String>(
@@ -276,7 +281,10 @@ class _CreateSocietyState extends State<CreateSociety>
                                   print("error in adding society");
                                 } else {
                                   clearControllers();
-                                  Loading();
+                                  changeScreen(
+                                      context,
+                                      HomePage(
+                                          useremail: widget.userModel.email));
                                   print("Society Added");
                                 }
                               }
