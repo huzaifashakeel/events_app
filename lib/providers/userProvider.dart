@@ -82,7 +82,6 @@ class UserProvider with ChangeNotifier {
     String phno,
     String email,
     String profileimage,
-    String coverimage,
   ) async {
     try {
       Map<String, dynamic> values = {
@@ -96,7 +95,6 @@ class UserProvider with ChangeNotifier {
         "phonenumber": phno,
         "email": email,
         "profileimage": profileimage,
-        "coverimage": "",
       };
 
       _firestore.collection(usercollection).doc().set(values);
@@ -188,7 +186,6 @@ class UserProvider with ChangeNotifier {
         "profileimage": user.profileimage,
         "dateofbirth": "10-12-1998",
         "bio": user.bio,
-        "coverimage": "",
       };
       _firestore
           .collection(collectionName)
