@@ -9,8 +9,22 @@ class SocietyProvider with ChangeNotifier {
 
   List<SocietyModel> socities = [];
 
+  List<SocietyModel> usersocities = [];
+
   SocietyProvider.initialize() {
     _loadSocities();
+  }
+  loadUserSocities({required String useruid}) async {
+    await _firestore
+        .collection("Users")
+        .doc(useruid)
+        .collection("Societies")
+        .get()
+        .then((result) => {
+              usersocities = [],
+              for (DocumentSnapshot<Map<String, dynamic>> user in result.docs)
+                {usersocities.add(SocietyModel.fromSnapshot(user))}
+            });
   }
 
   _loadSocities() async {
