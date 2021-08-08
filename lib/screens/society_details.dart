@@ -92,6 +92,8 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                     placeholder: kTransparentImage,
                                     image: widget.society.profileimage,
                                     fit: BoxFit.fill,
+                                    height: height * 0.14,
+                                    //width: 100,
                                   ),
                                 ),
 
@@ -280,6 +282,9 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                                 child: ClipOval(
                                                   child:
                                                       FadeInImage.memoryNetwork(
+                                                          fit: BoxFit.cover,
+                                                          height: 60,
+                                                          // width: 60,
                                                           placeholder:
                                                               kTransparentImage,
                                                           image: item
@@ -315,7 +320,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: eventProvider.events
+                          children: eventProvider.socevents
                               .map((item) => GestureDetector(
                                     onTap: () {},
                                     child: EventFeed(
