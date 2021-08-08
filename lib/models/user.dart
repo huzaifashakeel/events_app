@@ -6,7 +6,6 @@ class UserModel {
   static const ADDRESS = "address";
   static const INSTA = "instagramID";
   static const PROFILEIMAGE = "profileimage";
-  static const COVERIMAGE = "coverimage";
   static const UNIVERSITY = "university";
   static const DEPARTMENT = "department";
   static const DATEOFBIRTH = "dateofbirth";
@@ -20,7 +19,6 @@ class UserModel {
   String _address = "";
   String _instagramID = "";
   String _profileimage = "";
-  String _coverimage = "";
   String _university = "";
   String _dateofbirth = "";
   String _bio = "";
@@ -36,7 +34,6 @@ class UserModel {
   String get address => _address;
   String get instagramID => _instagramID;
   String get profileimage => _profileimage;
-  String get coverimage => _coverimage;
   String get university => _university;
   String get dateofbirth => _dateofbirth;
   String get bio => _bio;
@@ -51,7 +48,6 @@ class UserModel {
     _address = snapshot.data()![ADDRESS];
     _instagramID = snapshot.data()![INSTA];
     _profileimage = snapshot.data()![PROFILEIMAGE];
-    _coverimage = snapshot.data()![COVERIMAGE];
     _university = snapshot.data()![UNIVERSITY];
     _dateofbirth = snapshot.data()![DATEOFBIRTH];
     _bio = snapshot.data()![BIO];
