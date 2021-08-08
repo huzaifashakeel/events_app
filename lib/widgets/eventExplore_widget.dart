@@ -75,7 +75,7 @@ class EventExploreWidget extends StatelessWidget {
                             height: _height * 0.2,
                             //height: 200,
                             fit: BoxFit.fill,
-                            // width: double.infinity,
+                            width: double.infinity,
                           ),
                         ],
                       )),
