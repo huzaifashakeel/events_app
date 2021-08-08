@@ -5,12 +5,26 @@ import 'package:flutter/cupertino.dart';
 
 class EventProvider with ChangeNotifier {
   List<EventModel> events = [];
+  List<EventModel> socevents = [];
 
   String eventcollection = 'Events';
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   EventProvider.initialize() {
     loadevents();
+  }
+
+  loadSocietyEvents({required String Socid}) async {
+    await _firestore
+        .collection("Societies")
+        .doc(Socid)
+        .collection(eventcollection)
+        .get()
+        .then((result) => {
+              socevents = [],
+              for (DocumentSnapshot<Map<String, dynamic>> event in result.docs)
+                {socevents.add(EventModel.fromSnapshot(event))}
+            });
   }
 
   loadevents() async {
@@ -45,7 +59,7 @@ class EventProvider with ChangeNotifier {
         "description": eventdescription,
         "location": eventaddress,
         "date": eventdate,
-        "image": "none",
+        "image": eventimage,
         "heldby": host,
         "heldbySociety": hostsociety,
         "startime": startime,
