@@ -61,12 +61,16 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     UserAccountsDrawerHeader(
                       accountEmail: CustomText(
-                        text: "Huzaifashakeel778@gmail.com",
+                        text: widget.useremail,
                         color: Colors.black,
                         size: 16,
                       ),
                       accountName: CustomText(
-                          text: "Huzaifa", color: Colors.black, size: 20),
+                          text: userVarified
+                              ? userProvider.varifiedUser.name
+                              : "",
+                          color: Colors.black,
+                          size: 20),
                     ),
                     userProvider.isvar
                         ? ListTile(

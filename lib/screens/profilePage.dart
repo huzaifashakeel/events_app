@@ -6,6 +6,7 @@ import 'package:events_app/firebase%20torage/firebase_storage.dart';
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/homePage.dart';
+import 'package:events_app/screens/loading.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
+      // backgroundColor: Colors.amber,
       body: SingleChildScrollView(
         child: Form(
           key: formkey,
@@ -80,156 +82,200 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(children: [
-                Stack(children: [
-                  Container(
-                    width: double.maxFinite,
-                    height: _size.height * 0.30,
-                    color: Colors.red,
-                    child: _image == null
-                        ? Image.asset("images/13.jpg")
-                        : Image.file(
-                            File(_image!.path),
-                            fit: BoxFit.cover,
-                            height: 100,
-                            width: 100,
-                          ),
-                  ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  //         content: Container(
-                  //       height: _size.height * 0.15,
-                  //       child: Column(
-                  //         children: [
-                  //           TextButton(
-                  //               onPressed: () {}, child: Text("View Photo")),
-                  //           Divider(
-                  //             thickness: 2,
-                  //           ),
-                  //           TextButton(
-                  //               onPressed: () {
-                  //                 getImage(false);
-                  //               },
-                  //               child: Text("Select Photo"))
-                  //         ],
-                  //       ),
-                  //     )));
-                  //   },
-                  // child:
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
-                    child: Container(
-                      width: double.maxFinite,
-                      height: _size.height * 0.30,
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    //    ),
-                  )
-                ]),
+                // Container(
+                //   width: double.maxFinite,
+                //   height: _size.height * 0.30,
+                //   color: Colors.red,
+                //   child: _image == null
+                //       ? Image.asset(
+                //           "images/14.jpg",
+                //           fit: BoxFit.cover,
+                //         )
+                //       : Image.file(
+                //           File(_image!.path),
+                //           fit: BoxFit.cover,
+                //           height: 100,
+                //           width: 100,
+                //         ),
+                // ),
+                // GestureDetector(
+                //   onTap: () {
+                //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                //         content: Container(
+                //       height: _size.height * 0.15,
+                //       child: Column(
+                //         children: [
+                //           TextButton(
+                //               onPressed: () {}, child: Text("View Photo")),
+                //           Divider(
+                //             thickness: 2,
+                //           ),
+                //           TextButton(
+                //               onPressed: () {
+                //                 getImage(false);
+                //               },
+                //               child: Text("Select Photo"))
+                //         ],
+                //       ),
+                //     )));
+                //   },
+                // child:
+                // BackdropFilter(
+                //   filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
+                //   child: Container(
+                //     width: double.maxFinite,
+                //     height: _size.height * 0.30,
+                //     color: Colors.black.withOpacity(0.3),
+                //   ),
+                //   //    ),
+                // )
+
                 Padding(
                   padding: EdgeInsets.only(top: _size.height * 0.02, left: 10),
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.white)),
+                          border: Border.all(width: 2, color: Colors.black)),
                       child: IconButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           icon: Icon(
                             Icons.arrow_back,
-                            color: Colors.white,
+                            color: Colors.black,
                           ))),
                 ),
-                if (_image == null)
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: _size.height * 0.1),
-                      child: Column(
-                        children: [
-                          ClipRect(
-                            child: GestureDetector(
-                              onTap: () {
-                                getImage(false);
-                              },
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                    sigmaX: 10.0, sigmaY: 10.0),
-                                child: DottedBorder(
-                                    padding: EdgeInsets.all(16),
-                                    dashPattern: [6, 6],
-                                    borderType: BorderType.RRect,
-                                    // radius: Radius.circular(10),
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                    child: CustomText(
-                                      text: "Tap to select photo",
-                                      color: Colors.white,
-                                      size: 14,
-                                    )),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                // if (_image == null)
+                //   Center(
+                //     child: Padding(
+                //       padding: EdgeInsets.only(top: _size.height * 0.1),
+                //       child: Column(
+                //         children: [
+                //           ClipRect(
+                //             child: GestureDetector(
+                //               onTap: () {
+
+                //               },
+                //               child: BackdropFilter(
+                //                 filter: ImageFilter.blur(
+                //                     sigmaX: 10.0, sigmaY: 10.0),
+                //                 child: DottedBorder(
+                //                     padding: EdgeInsets.all(16),
+                //                     dashPattern: [6, 6],
+                //                     borderType: BorderType.RRect,
+                //                     // radius: Radius.circular(10),
+                //                     strokeWidth: 2,
+                //                     color: Colors.white,
+                //                     child: CustomText(
+                //                       text: "Tap to select photo",
+                //                       color: Colors.white,
+                //                       size: 14,
+                //                     )),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: _size.height * 0.22),
+                    padding: EdgeInsets.only(
+                        top: _size.height * 0.08, bottom: _size.height * 0.03),
                     child: Container(
-                      height: _size.width * 0.35,
-                      width: _size.width * 0.35,
+                      height: _size.width * 0.4,
+                      width: _size.width * 0.4,
                       decoration: BoxDecoration(
-                        image: new DecorationImage(
-                          image: new ExactAssetImage('images/7.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(10),
+                        // image: new DecorationImage(
+                        //   image: new ExactAssetImage('images/7.jpg'),
+                        //   fit: BoxFit.cover,
+                        // ),
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ClipRect(
-                            child: GestureDetector(
-                              onTap: () {
-                                getImage(false);
-                              },
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                    sigmaX: 10.0, sigmaY: 10.0),
-                                child: DottedBorder(
-                                  dashPattern: [6, 6],
-                                  borderType: BorderType.RRect,
-                                  radius: Radius.circular(10),
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                  child: CustomText(
-                                    text: "select photo",
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                  // child: IconButton(
-                                  //     onPressed: () {},
-                                  //     icon: Icon(
-                                  //       Icons.camera_alt_outlined,
-                                  //       color: Colors.white,
-                                  //     )),
-                                ),
-                              ),
+                      child:
+                          // Stack(
+                          //   children: [
+                          GestureDetector(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Container(
+                            height: 100,
+                            child: Column(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      getImage(true);
+                                    },
+                                    child: Text("Camra")),
+                                TextButton(
+                                    onPressed: () {
+                                      getImage(false);
+                                    },
+                                    child: Text("Select from Gallery")),
+                              ],
                             ),
+                          )));
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(70),
+                          child: CircleAvatar(
+                            radius: 100,
+                            child: _image == null
+                                ? Image.asset("images/13.jpg")
+                                : Image.file(
+                                    File(_image!.path),
+                                    fit: BoxFit.cover,
+                                    height: _size.height * 0.2,
+                                    width: _size.width * 0.4,
+                                  ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: CustomText(
-                          //     text: 'Change Image',
-                          //     color: Colors.white,
-                          //     size: 13,
-                          //   ),
-                          // )
-                        ],
+                        ),
                       ),
+                      // Column(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     // ClipRect(
+                      //     //   child: GestureDetector(
+                      //     //     onTap: () {
+                      //     //       getImage(false);
+                      //     //     },
+                      //     //     child: BackdropFilter(
+                      //     //       filter: ImageFilter.blur(
+                      //     //           sigmaX: 10.0, sigmaY: 10.0),
+                      //     //       child: DottedBorder(
+                      //     //         dashPattern: [6, 6],
+                      //     //         borderType: BorderType.RRect,
+                      //     //         radius: Radius.circular(10),
+                      //     //         strokeWidth: 2,
+                      //     //         color: Colors.white,
+                      //     //         child: CustomText(
+                      //     //           text: "select photo",
+                      //     //           color: Colors.white,
+                      //     //           size: 16,
+                      //     //         ),
+                      //     //         // child: IconButton(
+                      //     //         //     onPressed: () {},
+                      //     //         //     icon: Icon(
+                      //     //         //       Icons.camera_alt_outlined,
+                      //     //         //       color: Colors.white,
+                      //     //         //     )),
+                      //     //       ),
+                      //     //     ),
+                      //     //   ),
+                      //     // ),
+                      //     // Padding(
+                      //     //   padding: const EdgeInsets.all(8.0),
+                      //     //   child: CustomText(
+                      //     //     text: 'Change Image',
+                      //     //     color: Colors.white,
+                      //     //     size: 13,
+                      //     //   ),
+                      //     // )
+                      //   ],
+                      // ),
+                      //   ],
+                      //),
                     ),
                   ),
                 )
@@ -298,9 +344,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 editingController: userInsta,
                 text: "Enter Your Instagram Username",
               ),
-              SizedBox(
-                height: 50,
-              ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -312,6 +355,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (formkey.currentState!.validate()) {
                               String profilepiclink = await uploadPic(
                                   imagefile: File(_image!.path));
+                              Loading();
                               if (!await userProvider.createUser(
                                 userName.text,
                                 userCity.text,
@@ -323,7 +367,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 userPhNo.text,
                                 widget.useremail.toString(),
                                 profilepiclink,
-                                "",
                               )) {
                                 print("error in adding User");
                               } else {
